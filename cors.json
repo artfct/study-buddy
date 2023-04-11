@@ -1,0 +1,9 @@
+[
+    {
+      "origin": ["http://localhost:3000/"],
+      "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "responseHeader": ["Content-Type", "Authorization", "Content-Length", "Accept-Encoding", "X-Content-Type-Options", "X-Download-Options", "X-Frame-Options", "X-Permitted-Cross-Domain-Policies", "X-Referrer-Policy", "X-XSS-Protection"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  
