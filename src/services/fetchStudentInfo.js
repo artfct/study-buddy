@@ -1,72 +1,54 @@
-// import { ref, onValue } from 'firebase/database';
-
-
-// export default function fetchStudentInfo(uid, setStudentInfo, setScheduleData, rtdb) {
-//   if (!rtdb) {
-//     console.error('Database instance is not provided');
-//     return;
-//   }
-
-//   const userRef = ref(rtdb, `users/${uid}`);
-
-//   onValue(userRef, (snapshot) => {
-//     const data = snapshot.val();
-//     if (data) {
-//       console.log("Student data:", data);
-//       setStudentInfo(data);
-//       console.log("Schedule data:", data.courses)
-//       if (data.courses) {
-//         setScheduleData(data);
-//       } else {
-//         console.log("No schedule data available.");
-//       }
-//     } else {
-//       console.log("No such document!");
-//     }
-//   }, (error) => {
-//     console.error("Error fetching student info:", error);
-//   }, {
-//     onlyOnce: true
-//   });
-// }
-
-
-import { ref, onValue } from 'firebase/database';
 import { doc, getDoc } from 'firebase/firestore';
+import { getDownloadURL, ref } from 'firebase/storage';
 
-export default async function fetchStudentInfo(uid, setStudentInfo, rtdb, firestore) {
-  if (!rtdb) {
-    console.error('Realtime Database instance is not provided');
-    return;
-  }
-
+export default async function fetchStudentInfo(uid, setStudentInfo, setScheduleData, firestore, storage) {
   if (!firestore) {
     console.error('Firestore instance is not provided');
     return;
   }
 
-  const userRef = ref(rtdb, `users/${uid}`);
+  if (!storage) {
+    console.error('Storage instance is not provided');
+    return;
+  }
 
-  onValue(userRef, async (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      // Fetch profile photo from Firestore
-      const profilePhotoRef = doc(firestore, 'profilePhotos', uid);
-      const profilePhotoDoc = await getDoc(profilePhotoRef);
+  const userDoc = doc(firestore, 'users', uid);
 
-      if (profilePhotoDoc.exists()) {
-        const profilePhotoData = profilePhotoDoc.data();
-        data.profilePhoto = profilePhotoData.photoUrl;
+  try {
+    const userDocSnapshot = await getDoc(userDoc);
+
+    if (userDocSnapshot.exists()) {
+      const userData = userDocSnapshot.data();
+
+      // Fetch profile photo from Firebase Storage
+      const profilePhotoRef = ref(storage, `users/${uid}/profilePhoto`);
+      const profilePhotoUrl = await getDownloadURL(profilePhotoRef);
+
+      if (profilePhotoUrl) {
+        userData.profilePhoto = profilePhotoUrl;
       }
 
-      console.log("Student data:", data);
-      setStudentInfo(data);
+      if (userData.courses) {
+        // Convert Firestore Timestamps to JavaScript Date objects
+        const convertedScheduleData = userData.courses.map((course) => ({
+          ...course,
+          start: course.start.toDate(),
+          end: course.end.toDate(),
+        }));
+
+        console.log("Schedule data:", convertedScheduleData);
+        setScheduleData(convertedScheduleData);
+      } else {
+        console.log("No schedule data available.");
+      }
+      
+      console.log("Student data:", userData);
+      setStudentInfo(userData);
+
     } else {
       console.log("No such document!");
     }
-  }, (error) => {
+  } catch (error) {
     console.error("Error fetching student info:", error);
-  }, {
-    onlyOnce: true
-  });
+  }
 }

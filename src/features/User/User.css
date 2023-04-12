@@ -1,0 +1,14 @@
+.User {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .User h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .User button {
+    margin-top: 2rem;
+  }
+  

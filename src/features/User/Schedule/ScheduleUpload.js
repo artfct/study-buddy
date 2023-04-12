@@ -1,41 +1,32 @@
-import React from 'react';
-import Schedule from '../../scheduling/Schedule';
+import React from "react";
+import './ScheduleUpload.css';
 
-const ScheduleUpload = ({ user, db, onScheduleUpdate }) => {
-  const [scheduleInstance, setScheduleInstance] = React.useState(null);
-
-  React.useEffect(() => {
-    if (user) {
-      setScheduleInstance(new Schedule(user, db));
-    }
-  }, [user, db]);
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file && scheduleInstance) {
-      const fileContents = await file.text();
-      const parsedSchedule = await scheduleInstance.parse(fileContents);
-
-      if (parsedSchedule && parsedSchedule.courses) {
-        await scheduleInstance.save(parsedSchedule);
-        // Update the scheduleData state in the parent component (User.js)
-        onScheduleUpdate(parsedSchedule);
-      } else {
-        console.error("Error: Invalid schedule object in ScheduleUpload.js");
-      }
+const ScheduleUpload = ({ user, scheduleInstance, onScheduleUpdate }) => {
+  const handleUpload = async (e) => {
+    if (e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+  
+      reader.onload = async (event) => {
+        const fileContents = event.target.result;
+        try {
+          const scheduleData = await scheduleInstance.parse(fileContents);
+          scheduleInstance.save(scheduleData);
+          onScheduleUpdate(scheduleData);
+        } catch (error) {
+          console.error("Error parsing schedule file:", error);
+        }
+      };
+  
+      reader.readAsText(file);
     }
   };
+  
 
   return (
-    <div>
-      <label htmlFor="upload-schedule">Upload Schedule:</label>
-      <input
-        type="file"
-        id="upload-schedule"
-        name="upload-schedule"
-        accept=".ics"
-        onChange={handleFileUpload}
-      />
+    <div className="ScheduleUpload">
+      <h3>Upload Schedule:</h3>
+      <input type="file" accept=".ics" onChange={handleUpload} />
     </div>
   );
 };

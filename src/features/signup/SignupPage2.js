@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 function SignupPage2({ onNext, onBack }) {
+  const [bio, setBio] = useState('');
   const [username, setUsername] = useState('');
   const [profilePhoto, setProfilePhoto] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext({ username, profilePhoto });
+    onNext({ username, bio, profilePhoto });
   };
 
   return (
@@ -18,6 +19,11 @@ function SignupPage2({ onNext, onBack }) {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+        />
+        <textarea
+          placeholder="Enter your Bio"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
         />
         <input
           type="file"

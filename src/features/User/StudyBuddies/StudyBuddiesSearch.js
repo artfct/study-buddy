@@ -1,10 +1,11 @@
 import React from 'react';
 import findStudyBuddies from '../../scheduling/findStudyBuddies';
+import './StudyBuddiesSearch.css';
 
-const StudyBuddiesSearch = ({ searchTerm, setSearchTerm, setStudyBuddies, user, rtdb }) => {
+const StudyBuddiesSearch = ({ searchTerm, setSearchTerm, setStudyBuddies, user, firestore }) => {
   const handleSearch = (term) => {
     setSearchTerm(term);
-    findStudyBuddies(user.uid, setStudyBuddies, term, rtdb);
+    findStudyBuddies(user.uid, setStudyBuddies, term, firestore);
   };
 
   return (

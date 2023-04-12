@@ -3,22 +3,10 @@ import parseICSFile from "./parseICSFile";
 import saveScheduleToDatabase from "../../services/saveScheduleToDatabase";
 
 class Schedule {
-  constructor(user, rtdb) {
+  constructor(user, firestore) {
     this.user = user;
-    this.rtdb = rtdb;
+    this.firestore = firestore;
   }
-
-  upload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const fileContent = event.target.result;
-      this.parse(fileContent);
-    };
-
-    reader.readAsText(file);
-  };
 
   parse(fileContents) {
     return new Promise((resolve, reject) => {
@@ -29,21 +17,21 @@ class Schedule {
         reject(error);
       }
     });
-  }
+  };
   
   save = (schedule) => {
-    saveScheduleToDatabase(schedule, this.rtdb, this.user.uid);
+    saveScheduleToDatabase(schedule, this.firestore, this.user.uid);
   };
 
   displaySchedule = (schedule = null) => {
     if (!schedule) {
       schedule = this.scheduleData;
     }
-
-    if (!schedule || !schedule.courses) {
+  
+    if (!schedule || !Array.isArray(schedule)) {
       return <p>No schedule data available - from Schedule.js</p>;
     }
-
+  
     return (
       <table>
         <thead>
@@ -56,7 +44,7 @@ class Schedule {
           </tr>
         </thead>
         <tbody>
-          {schedule.courses.map((course, index) => (
+          {schedule.map((course, index) => (
             <tr key={index}>
               <td>{course.code}</td>
               <td>{course.section}</td>

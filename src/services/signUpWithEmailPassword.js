@@ -1,33 +1,7 @@
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { set, ref } from "firebase/database";
-
-// export default function signUpWithEmailPassword(email, password, studentName, studentId, auth, db, setError) {
-//   if (password.length < 6) {
-//     setError("Password should be at least 6 characters");
-//     return;
-//   }
-
-//   createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       console.log("Signed up as:", userCredential.user.email);
-//       setError(''); // Clear the error message
-
-//       // Save the student name and ID to the user's profile
-//       console.log("Saving student info:", { name: studentName, id: studentId }); // Add this line
-//       set(ref(db, `users/${userCredential.user.uid}/student`), {
-//         name: studentName,
-//         id: studentId,
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Error signing up:", error);
-//       setError(error.message);
-//     });
-// }
-
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, set } from "firebase/database";
+import { doc, setDoc } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
+import { firestore, storage, auth } from "..//firebase/firebase";
 
 async function uploadProfilePhoto(storage, uid, file) {
   const profilePhotoRef = storageRef(storage, `users/${uid}/profilePhoto`);
@@ -35,7 +9,6 @@ async function uploadProfilePhoto(storage, uid, file) {
   const downloadURL = await getDownloadURL(profilePhotoRef);
   return downloadURL;
 }
-
 
 export default async function signUpWithEmailPassword({
   email,
@@ -45,24 +18,8 @@ export default async function signUpWithEmailPassword({
   username,
   bio,
   profilePhoto,
-  auth,
-  rtdb,
-  storage,
   setError
 }) {
-
-    // Upload profile photo to Firebase Storage
-    let profilePhotoURL = "";
-    if (profilePhoto) {
-      try {
-        profilePhotoURL = await uploadProfilePhoto(storage, studentId, profilePhoto);
-      } catch (error) {
-        console.error("Error uploading profile photo:", error);
-        setError(error.message);
-        return;
-      }
-    }
-
   if (password.length < 6) {
     setError("Password should be at least 6 characters");
     return;
@@ -73,21 +30,23 @@ export default async function signUpWithEmailPassword({
     console.log("Signed up as:", userCredential.user.email);
     setError(''); // Clear the error message
 
-    // Save the student name, ID, username, and bio to the user's profile
-    // console.log("Saving student info:", userData);
+    // Upload profile photo to Firebase Storage
+    let profilePhotoURL = "";
+    if (profilePhoto) {
+      try {
+        profilePhotoURL = await uploadProfilePhoto(storage, userCredential.user.uid, profilePhoto);
+      } catch (error) {
+        console.error("Error uploading profile photo:", error);
+        setError(error.message);
+        return;
+      }
+    }
 
-    // Upload the photo to Firebase Storage
-    const profilePhotoPath = `users/${userCredential.user.uid}/profilePhoto`;
-    const photoRef = storageRef(storage, profilePhotoPath);
-
-    await uploadBytes(photoRef, profilePhoto);
-    const photoURL = await getDownloadURL(photoRef);
-    console.log('Name:', studentName);
-    await set(ref(rtdb, `users/${userCredential.user.uid}/student`), {
+    await setDoc(doc(firestore, `users`, userCredential.user.uid), {
       studentName,
       id: studentId,
       username,
-      profilePhoto: photoURL,
+      profilePhoto: profilePhotoURL,
       bio,
     });
 

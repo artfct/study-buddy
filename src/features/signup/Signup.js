@@ -4,15 +4,10 @@ import SignupPage1 from './SignupPage1';
 import SignupPage2 from './SignupPage2';
 import SignupPage3 from './SignupPage3';
 import SignupPage4 from './SignupPage4';
-import { getAuth } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
 
 function Signup() {
   const [step, setStep] = useState(1);
   const [userData, setUserData] = useState({});
-
-  const auth = getAuth();
-  const db = getDatabase();
 
   const navigate = useNavigate();
 
@@ -40,8 +35,6 @@ function Signup() {
       return (
         <SignupPage4
           userData={userData}
-          auth={auth}
-          db={db}
           onFinish={goToHome}
           onBack={previousPage}
         />

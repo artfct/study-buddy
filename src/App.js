@@ -8,16 +8,8 @@ import User from './features/User/User';
 import Profile from './features/profile/Profile';
 import Signup from './features/signup/Signup';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
-import { getFirestore } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
-import firebaseConfig from './firebase/firebaseConfig';
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const rtdb = getDatabase(app);
-const firestore = getFirestore(app);
+import { onAuthStateChanged } from 'firebase/auth';
+import { firestore, storage, auth } from './firebase/firebase';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -32,14 +24,14 @@ function App() {
 
   return (
     <Router>
-      <Layout>
+      <Layout user={user}>
         <Routes>
-          <Route exact path="/" element={<Home auth={auth} rtdb={rtdb} firestore={firestore} />} />
+          <Route exact path="/" element={<Home auth={auth} firestore={firestore} storage={storage} />} />
           <Route
             path="/user"
-            element={user ? <User user={user} rtdb={rtdb} firestore={firestore} /> : <Home auth={auth} rtdb={rtdb} firestore={firestore} />}
+            element={user ? <User user={user} firestore={firestore} storage={storage} /> : <Home auth={auth} firestore={firestore} storage={storage} />}
           />
-          <Route path="/profile/:userId" element={<Profile user={user} rtdb={rtdb} firestore={firestore} />} />
+          <Route path="/profile/:userId" element={<Profile user={user} firestore={firestore} storage={storage} />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </Layout>

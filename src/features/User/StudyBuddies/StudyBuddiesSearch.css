@@ -1,0 +1,10 @@
+.StudyBuddiesSearch {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .StudyBuddiesSearch input {
+    margin-right: 0.5rem;
+  }
+  

@@ -1,23 +1,24 @@
 import React from 'react';
 
-function ProfileDisplay({ studentInfo, onEdit }) {
-  if (!studentInfo) {
-    return <p>Loading student information...</p>;
-  }
+const ScheduleDisplay = ({ scheduleData, scheduleInstance }) => {
+  const [scheduleDisplay, setScheduleDisplay] = React.useState(null);
+
+  React.useEffect(() => {
+    if (scheduleData && scheduleInstance) {
+      setScheduleDisplay(scheduleInstance.displaySchedule(scheduleData));
+    }
+  }, [scheduleData, scheduleInstance]);
 
   return (
     <div>
-      <h1>{studentInfo.name}</h1>
-      <p>UID: {studentInfo.uid}</p>
-      <p>Email: {studentInfo.email}</p>
-      <p>Username: {studentInfo.username}</p>
-      <p>Bio: {studentInfo.bio}</p>
-      <p>Interests: {studentInfo.interests}</p>
-      <img src={studentInfo.profilePhoto} alt="`${studentInfo.name}` profile photo"/>
-      {/* Add more fields to display here */}
-      <button onClick={onEdit}>Edit</button>
+      {scheduleDisplay && (
+        <div>
+          <h3>Schedule:</h3>
+          {scheduleDisplay}
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default ProfileDisplay;
+export default ScheduleDisplay;

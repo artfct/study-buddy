@@ -1,13 +1,16 @@
 import React from 'react';
 import Schedule from '../../scheduling/Schedule';
+import './ScheduleDisplay.css';
 
-const ScheduleDisplay = ({ scheduleData }) => {
+const ScheduleDisplay = ({ scheduleData, user, firestore }) => {
   const [scheduleInstance, setScheduleInstance] = React.useState(null);
   const [scheduleDisplay, setScheduleDisplay] = React.useState(null);
 
   React.useEffect(() => {
-    setScheduleInstance(new Schedule());
-  }, []);
+    if (user && firestore) {
+      setScheduleInstance(new Schedule(user, firestore));
+    }
+  }, [user, firestore]);
 
   React.useEffect(() => {
     if (scheduleData && scheduleInstance) {
@@ -16,7 +19,7 @@ const ScheduleDisplay = ({ scheduleData }) => {
   }, [scheduleData, scheduleInstance]);
 
   return (
-    <div>
+    <div className='ScheduleDisplay'>
       {scheduleDisplay && (
         <div>
           <h3>Schedule:</h3>
