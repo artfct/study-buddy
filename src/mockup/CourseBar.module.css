@@ -1,0 +1,34 @@
+.courseBar {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.course {
+  display: inline-flex;
+  flex-direction: column;
+  margin-right: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: #f2f2f2;
+  white-space: nowrap;
+}
+
+.course:last-of-type {
+  margin-right: 0;
+}
+
+.courseCode {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555555;
+}
+
+.courseName {
+  font-size: 10px;
+  color: #777777;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
