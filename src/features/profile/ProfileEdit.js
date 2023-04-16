@@ -1,43 +1,52 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
-function ProfileEdit({ studentInfo, onSave, onCancel }) {
-  const [username, setUsername] = useState(studentInfo.username);
-  const [bio, setBio] = useState(studentInfo.bio);
-  // Add more fields to edit here
+// function ProfileEdit({ studentInfo, onSave, onCancel }) {
+//   const [username, setUsername] = useState(studentInfo.username);
+//   const [bio, setBio] = useState(studentInfo.bio);
+//   // Add more fields to edit here
 
-  const handleSave = () => {
-    const updatedInfo = {
-      ...studentInfo,
-      username,
-      bio,
-      // Add more updated fields here
-    };
-    onSave(updatedInfo);
-  };
+//   const handleSave = () => {
+//     const updatedInfo = {
+//       ...studentInfo,
+//       username,
+//       bio,
+//       // Add more updated fields here
+//     };
+//     // Save updated student info to Firebase
+//     const studentRef = ref(db, `students/${studentInfo.uid}`);
+//     update(studentRef, updatedInfo)
+//         .then(() => {
+//         onSave(updatedInfo);
+//         })
+//         .catch((error) => {
+//         console.error('Error updating student info:', error);
+//         });
+//     onSave(updatedInfo);
+//   };
 
-  return (
-    <div>
-      <h1>Edit Profile</h1>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <label>
-        Bio:
-        <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        ></textarea>
-      </label>
-      {/* Add more input fields to edit here */}
-      <button onClick={handleSave}>Save</button>
-      <button onClick={onCancel}>Cancel</button>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h1>Edit Profile</h1>
+//       <label>
+//         Username:
+//         <input
+//           type="text"
+//           value={username}
+//           onChange={(e) => setUsername(e.target.value)}
+//         />
+//       </label>
+//       <label>
+//         Bio:
+//         <textarea
+//           value={bio}
+//           onChange={(e) => setBio(e.target.value)}
+//         ></textarea>
+//       </label>
+//       {/* Add more input fields to edit here */}
+//       <button onClick={handleSave}>Save</button>
+//       <button onClick={onCancel}>Cancel</button>
+//     </div>
+//   );
+// }
 
-export default ProfileEdit;
+// export default ProfileEdit;

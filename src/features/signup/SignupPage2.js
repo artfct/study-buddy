@@ -6,6 +6,7 @@ function SignupPage2({ userData, onNext, onBack}) {
   const [bio, setBio] = useState('');
   const [username, setUsername] = useState('');
   const [profilePhoto, setProfilePhoto] = useState('');
+  const [previewPhoto, setPreviewPhoto] = useState('');
   const [major, setMajor] = useState('');
   const [fileInput, setFileInput] = useState(null);
   const [scheduleData, setScheduleData] = useState(null);
@@ -18,9 +19,11 @@ function SignupPage2({ userData, onNext, onBack}) {
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setProfilePhoto(file);
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePhoto(reader.result);
+        setPreviewPhoto(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -47,7 +50,7 @@ function SignupPage2({ userData, onNext, onBack}) {
         studentName={userData.studentName}
         username={username}
         bio={bio}
-        profilePhoto={profilePhoto}
+        profilePhoto={previewPhoto}
         major={major}
         courses={scheduleData?.courses}
       />

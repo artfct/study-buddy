@@ -5,16 +5,9 @@ import saveScheduleToDatabase from '../../services/saveScheduleToDatabase';
 function SignupPage3({ onNext, onBack, firestore, user }) {
   const [fileInput, setFileInput] = useState(null);
   const [scheduleData, setScheduleData] = useState(null);
-//   const [interests, setInterests] = useState([]);
-//   const [purpose, setPurpose] = useState([]);
-
-//   const interestOptions = ['Interest 1', 'Interest 2', 'Interest 3'];
-//   const purposeOptions = ['Purpose 1', 'Purpose 2', 'Purpose 3'];
-
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    // onNext({ scheduleData, interests, purpose });
     onNext({ scheduleData });
   };
 
