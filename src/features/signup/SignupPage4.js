@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import signUpWithEmailPassword from '../../services/signUpWithEmailPassword';
-import saveScheduleToDatabase from '../../services/saveScheduleToDatabase';
 
-function SignupPage4({ userData, onFinish, onBack, scheduleData, firestore }) {
+function SignupPage4({ userData, onFinish, onBack, scheduleData }) {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
