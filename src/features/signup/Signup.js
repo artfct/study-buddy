@@ -5,13 +5,18 @@ import SignupPage2 from './SignupPage2';
 import SignupPage3 from './SignupPage3';
 import SignupPage4 from './SignupPage4';
 
-function Signup() {
+function Signup({ firestore, user }) {
   const [step, setStep] = useState(1);
   const [userData, setUserData] = useState({});
+  const [scheduleData, setScheduleData] = useState(null);
 
   const navigate = useNavigate();
 
   const nextPage = (newData) => {
+    if (newData.scheduleData) {
+      setScheduleData(newData.scheduleData);
+      delete newData.scheduleData;
+    }
     setUserData({ ...userData, ...newData });
     setStep(step + 1);
   };
@@ -28,15 +33,18 @@ function Signup() {
     case 1:
       return <SignupPage1 onNext={nextPage} />;
     case 2:
-      return <SignupPage2 onNext={nextPage} onBack={previousPage} />;
+      return <SignupPage2 userData={userData} onNext={nextPage} onBack={previousPage} />;
+    // case 3:
+    //   return <SignupPage3 onNext={nextPage} onBack={previousPage} />;
     case 3:
-      return <SignupPage3 onNext={nextPage} onBack={previousPage} />;
-    case 4:
       return (
         <SignupPage4
           userData={userData}
           onFinish={goToHome}
           onBack={previousPage}
+          scheduleData={scheduleData}
+          firestore={firestore}
+          user={user}
         />
       );
     default:

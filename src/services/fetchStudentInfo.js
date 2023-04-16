@@ -1,5 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
+import defaultProfilePhoto from '../mockup/asset/chess.jpg';
 
 export default async function fetchStudentInfo(uid, setStudentInfo, setScheduleData, firestore, storage) {
   if (!firestore) {
@@ -22,7 +23,13 @@ export default async function fetchStudentInfo(uid, setStudentInfo, setScheduleD
 
       // Fetch profile photo from Firebase Storage
       const profilePhotoRef = ref(storage, `users/${uid}/profilePhoto`);
-      const profilePhotoUrl = await getDownloadURL(profilePhotoRef);
+      let profilePhotoUrl;
+      try {
+        profilePhotoUrl = await getDownloadURL(profilePhotoRef);
+      } catch (error) {
+        console.error('Error fetching profile photo:', error);
+        profilePhotoUrl = defaultProfilePhoto; // Set the default profile photo URL if an error occurs or the photo doesn't exist
+      }
 
       if (profilePhotoUrl) {
         userData.profilePhoto = profilePhotoUrl;

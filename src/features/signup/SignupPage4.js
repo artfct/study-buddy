@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import signUpWithEmailPassword from '../../services/signUpWithEmailPassword';
+import saveScheduleToDatabase from '../../services/saveScheduleToDatabase';
 
-function SignupPage4({ userData, onFinish, onBack, scheduleData }) {
+function SignupPage4({ userData, onFinish, onBack, scheduleData, firestore }) {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log('userData:',userData);
-
-    await signUpWithEmailPassword({ ...userData, setError });
-    if (!error) {
-      onFinish();
-    }
+  
+    console.log('userData:', userData);
+  
+    await signUpWithEmailPassword({ ...userData, courses: scheduleData.courses, setError });
+    onFinish();
   };
 
   return (

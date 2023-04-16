@@ -52,3 +52,89 @@
   font-style: italic;
   margin-top: 10px;
 }
+
+
+
+/* 
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+  }
+  
+  .profile-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35%;
+    width: 100%;
+  }
+  
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .student-name {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  
+  .common-courses-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  
+  .common-courses-table th {
+    font-size: 1rem;
+    font-weight: normal;
+    text-align: left;
+  }
+  
+  .common-courses-table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .course-tag {
+    font-size: 0.9rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #e9ecef;
+    border-radius: 20px;
+  }
+  
+  .card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .card li {
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    padding: 5px 10px;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    margin-right: 5px;
+  }
+  
+  
+   */

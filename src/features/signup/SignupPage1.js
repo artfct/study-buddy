@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
+import { checkEmailAndStudentId } from '../../services/signUpWithEmailPassword';
 
 function SignupPage1({ onNext }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [studentName, setStudentName] = useState('');
   const [studentId, setStudentId] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password || !studentName || !studentId) {
+    if (!email || !password || !confirmPassword || !studentName || !studentId) {
       alert('All fields are required.');
       return;
     }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    const { emailExists, idExists } = await checkEmailAndStudentId(email, studentId);
+
+    if (emailExists) {
+      alert('Email already in use.');
+      return;
+    }
+
+    if (idExists) {
+      alert('Student ID already in use.');
+      return;
+    }
+
     onNext({ email, password, studentName, studentId });
   };
 
@@ -45,6 +65,13 @@ function SignupPage1({ onNext }) {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
         <button type="submit">Next</button>

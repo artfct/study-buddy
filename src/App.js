@@ -32,7 +32,7 @@ function App() {
             element={user ? <User user={user} firestore={firestore} storage={storage} /> : <Home auth={auth} firestore={firestore} storage={storage} />}
           />
           <Route path="/profile/:userId" element={<Profile user={user} firestore={firestore} storage={storage} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signup firestore={firestore} user={user} auth={auth} />} />
         </Routes>
       </Layout>
     </Router>

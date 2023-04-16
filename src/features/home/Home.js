@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import signInWithEmailPassword from '../../services/signInWithEmailPassword';
 import { useNavigate } from 'react-router-dom';
+import BuddyCard from '../../mockup/BuddyCard';
+import BuddyCard2 from '../../mockup/BuddyCard2';
 
 function Home({ auth }) {
   const [email, setEmail] = useState('');
@@ -32,6 +34,8 @@ function Home({ auth }) {
         <button type="submit">Sign In</button>
       </form>
       <button onClick={handleSignupClick}>Signup</button>
+      {/* <BuddyCard/> */}
+      <BuddyCard2/>
     </div>
   );
 }
