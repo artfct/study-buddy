@@ -1,5 +1,5 @@
 import React from 'react';
-import Schedule from '../../scheduling/Schedule';
+import Schedule from './Schedule';
 import './ScheduleDisplay.css';
 
 const ScheduleDisplay = ({ scheduleData, user, firestore }) => {

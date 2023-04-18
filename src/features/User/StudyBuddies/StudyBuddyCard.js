@@ -1,22 +1,34 @@
 import React from 'react';
-import './StudyBuddyCard.css';
+import styles from './StudyBuddyCard.module.css';
 
 const StudyBuddyCard = ({ buddy }) => {
+  const renderCommonCourses = () => {
+    if (buddy && buddy.commonCourses) {
+      return buddy.commonCourses.map((courseCode, i) => (
+        <span key={i} className={styles.tag}>
+          {courseCode}
+        </span>
+      ));
+    }
+    return null;
+  };
+
   return (
-    <div className="card">
+    <div className={styles.card}>
       {buddy && (
         <>
-          <img src={buddy.profilePhoto} alt={`${buddy.studentName}'s profile`} style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
-          <h3>
-            {buddy.studentName} ({buddy.email})
-          </h3>
-          <p>Common Courses:</p>
-          <ul>
-            {buddy.commonCourses.map((courseCode, i) => (
-              <li key={i}>{courseCode}</li>
-            ))}
-          </ul>
-          <p>Bio: {buddy.bio}</p>
+          <div className={styles.photoContainer}>
+            <img
+              className={styles.photo}
+              src={buddy.profilePhoto}
+              alt={`${buddy.studentName}'s profile`}
+            />
+          </div>
+          <h1 className={styles.name}>{buddy.studentName}</h1>
+          <p className={styles.username}>{`@${buddy.username}`}</p>
+          <p className={styles.major}>{`${buddy.major}`}</p>
+          <p className={styles.bio}>{`${buddy.bio}` || "No bio yet!"}</p>
+          <div className={styles.tagContainer}>{renderCommonCourses()}</div>
         </>
       )}
     </div>
@@ -25,36 +37,44 @@ const StudyBuddyCard = ({ buddy }) => {
 
 export default StudyBuddyCard;
 
+
 // import React from 'react';
-// import './StudyBuddyCard.css';
+// import styles from './StudyBuddyCard.module.css';
 
 // const StudyBuddyCard = ({ buddy }) => {
+//   const renderCommonCourses = () => {
+//     if (buddy && buddy.commonCourses) {
+//       return buddy.commonCourses.map((courseCode, i) => (
+//         <span key={i} className={styles.tag}>
+//           {courseCode}
+//         </span>
+//       ));
+//     }
+//     return null;
+//   };
+
 //   return (
-//     <div className="card">
+//     <div className={styles.card}>
 //       {buddy && (
 //         <>
-//           <div className="profile-photo-container">
-//             <img src={buddy.profilePhoto} alt={`${buddy.studentName}'s profile`} className="profile-photo" />
+//           <div className={styles.photoContainer}>
+//             <div className={styles.photoWrapper}>
+//               <img
+//                 className={styles.photo}
+//                 src={buddy.profilePhoto}
+//                 alt={`${buddy.studentName}'s profile`}
+//               />
+//             </div>
 //           </div>
-//           <h3 className="student-name">{buddy.studentName}</h3>
-//           <table className="common-courses-table">
-//             <thead>
-//               <tr>
-//                 <th>Common Courses:</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               <tr>
-//                 <td>
-//                   {buddy.commonCourses.map((courseCode, i) => (
-//                     <span key={i} className="course-tag">{courseCode}</span>
-//                   ))}
-//                 </td>
-//               </tr>
-//             </tbody>
-//           </table>
-//           <p className="bio-text">{buddy.bio}</p>
-//           <p className="university-info">University of Toronto, St. Geroge</p>
+//           <div className={styles.infoContainer}>
+//             <div className={styles.nameContainer}>
+//               <h1 className={styles.name}>{buddy.studentName}</h1>
+//               <p className={styles.username}>{`@${buddy.username}`}</p>
+//             </div>
+//             <p className={styles.major}>{`${buddy.major}`}</p>
+//             <p className={styles.bio}>{`${buddy.bio}` || "No bio yet!"}</p>
+//             <div className={styles.tagContainer}>{renderCommonCourses()}</div>
+//           </div>
 //         </>
 //       )}
 //     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { deleteUser } from '../services/deleteUser';
+import { deleteUser } from '../../services/deleteUser';
 
 const Admin = ({ firestore, storage }) => {
   const [userId, setUserId] = useState('');

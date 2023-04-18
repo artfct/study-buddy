@@ -1,6 +1,6 @@
 import React from "react";
-import parseICSFile from "./parseICSFile";
-import saveScheduleToDatabase from "../../services/saveScheduleToDatabase";
+import parseICSFile from "../../scheduling/parseICSFile";
+import saveScheduleToDatabase from "../../../services/saveScheduleToDatabase";
 
 class Schedule {
   constructor(user, firestore) {

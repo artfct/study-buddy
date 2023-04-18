@@ -7,6 +7,7 @@ import Home from './features/home/Home';
 import User from './features/User/User';
 import Profile from './features/profile/Profile';
 import Signup from './features/signup/Signup';
+import Admin from './features/admin/Admin';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { firestore, storage, auth } from './firebase/firebase';
@@ -33,6 +34,7 @@ function App() {
           />
           <Route path="/profile/:userId" element={<Profile user={user} firestore={firestore} storage={storage} />} />
           <Route path="/signup" element={<Signup firestore={firestore} user={user} auth={auth} />} />
+          <Route path="/admin" element={user && user.email === 'admin@example.com' ? <Admin firestore={firestore} storage={storage} /> : null} />
         </Routes>
       </Layout>
     </Router>
