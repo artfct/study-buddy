@@ -38,7 +38,7 @@ To run Study Buddy, you'll need the following software installed:
 3. Install project dependencies:
 
    ```
-   yarn install
+   npm install
    ```
 
 4. Create a `.env` file in the root directory of the project with the following Firebase configuration variables [Optional]:
@@ -57,7 +57,7 @@ To run Study Buddy, you'll need the following software installed:
 5. Start the development server:
 
    ```
-   yarn start
+   npm start
    ```
 
    The application should now be running on [http://localhost:3000](http://localhost:3000).
