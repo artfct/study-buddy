@@ -3,16 +3,17 @@ import ProfileDisplay from './ProfileDisplay';
 import ProfileEdit from './ProfileEdit';
 import fetchStudentInfo from '../../services/fetchStudentInfo';
 
-
-function Profile({ user, rtdb, firestore }) {
+function Profile({ user, firestore, storage }) {
   const [studentInfo, setStudentInfo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (user) {
-      fetchStudentInfo(user.uid, setStudentInfo, rtdb, firestore);
+      fetchStudentInfo(user.uid, firestore, storage).then((info) => {
+        setStudentInfo(info);
+      });
     }
-  }, [user, rtdb, firestore]);
+  }, [user, firestore, storage]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -35,7 +36,7 @@ function Profile({ user, rtdb, firestore }) {
             studentInfo={studentInfo}
             onSave={handleSave}
             onCancel={handleCancel}
-            db={rtdb}
+            db={firestore}
           />
         ) : (
           <ProfileDisplay studentInfo={studentInfo} onEdit={handleEdit} />

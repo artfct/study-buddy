@@ -1,52 +1,56 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
+import editStudentInfo from '../../services/editStudentInfo';
 
-// function ProfileEdit({ studentInfo, onSave, onCancel }) {
-//   const [username, setUsername] = useState(studentInfo.username);
-//   const [bio, setBio] = useState(studentInfo.bio);
-//   // Add more fields to edit here
+function ProfileEdit({ user, studentInfo, firestore, storage, onCancel, onSave }) {
+  const [updatedInfo, setUpdatedInfo] = useState({ ...studentInfo });
 
-//   const handleSave = () => {
-//     const updatedInfo = {
-//       ...studentInfo,
-//       username,
-//       bio,
-//       // Add more updated fields here
-//     };
-//     // Save updated student info to Firebase
-//     const studentRef = ref(db, `students/${studentInfo.uid}`);
-//     update(studentRef, updatedInfo)
-//         .then(() => {
-//         onSave(updatedInfo);
-//         })
-//         .catch((error) => {
-//         console.error('Error updating student info:', error);
-//         });
-//     onSave(updatedInfo);
-//   };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUpdatedInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
-//   return (
-//     <div>
-//       <h1>Edit Profile</h1>
-//       <label>
-//         Username:
-//         <input
-//           type="text"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//         />
-//       </label>
-//       <label>
-//         Bio:
-//         <textarea
-//           value={bio}
-//           onChange={(e) => setBio(e.target.value)}
-//         ></textarea>
-//       </label>
-//       {/* Add more input fields to edit here */}
-//       <button onClick={handleSave}>Save</button>
-//       <button onClick={onCancel}>Cancel</button>
-//     </div>
-//   );
-// }
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUpdatedInfo((prev) => ({ ...prev, profilePhoto: file }));
+    }
+  };
 
-// export default ProfileEdit;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await editStudentInfo(user.uid, updatedInfo, firestore, storage);
+    onSave(updatedInfo);
+  };
+
+  return (
+    <div className="ProfileEdit">
+      <h2>Edit Profile</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="studentName" value={updatedInfo.studentName} onChange={handleChange} />
+        </label>
+        <label>
+          ID:
+          <input type="text" name="id" value={updatedInfo.id} onChange={handleChange} />
+        </label>
+        <label>
+          Bio:
+          <textarea name="bio" value={updatedInfo.bio} onChange={handleChange} />
+        </label>
+        <label>
+          Major:
+          <input type="text" name="major" value={updatedInfo.major} onChange={handleChange} />
+        </label>
+        <label>
+          Profile Photo:
+          <input type="file" name="profilePhoto" onChange={handlePhotoChange} />
+        </label>
+        <button type="submit">Save Changes</button>
+        <button type="button" onClick={onCancel}>Cancel</button>
+      </form>
+    </div>
+  );
+}
+
+export default ProfileEdit;

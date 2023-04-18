@@ -1,15 +1,15 @@
 .card {
-  width: 350px;
-  height: 500px;
-  background-color: #f9f9f9;
+  width: 380px;
+  height: 410px;
+  background-color: #ffffff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
-
 .photoContainer {
   width: 100%;
   height: 40%;
@@ -18,18 +18,29 @@
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
+  overflow: hidden; /* hide any part of the image that overflows the container */
+  position: relative;
 }
 
 .photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%; /* set the height to 100% */
+  width: auto; /* set the width to auto */
+  object-fit: cover; /* scales the image to cover the container while maintaining its aspect ratio */
+  object-position: center center;
+  aspect-ratio: 1/1;
+
+  border-radius: 50%;
 }
 
+
 .name {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 3px;
+  margin-bottom: -8px;
   margin-top: 10px;
 }
 
@@ -48,16 +59,19 @@
 .tagContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 5px;
-  margin-top: 15px;
+  margin-top: 25px;
+  padding: 3px 0px 3px 0px;
+  background-color: #f1f1f1;
+  border-radius: 25px;
 }
 
 .tag {
-  background-color: #f0f0f0;
-  color: #3a3a3a;
-  font-size: clamp(10px, 1.5vw, 12px);
+  /* background-color: #f0f0f0; */
+  color: #423c3c;
+  font-size: clamp(11px, 1.5vw, 13px);
   font-weight: bold;
   border-radius: 3px;
   padding: 5px 5px;
@@ -65,8 +79,29 @@
 }
 
 .bio {
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 15px;
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.uniContainer {
+  padding: 3px 15px 3px 15px;
+  height: 22px;
+  border-radius: 20px;
+  background-color: #1A2121;
+  display: flex;
+  align-items: center;
+}
+
+.uni {
+  font-size: 10px;
+  color: #ffff;
+  font-weight: bold;
+}
+
+.common {
+  font-size: 12px;
+  margin-bottom: -16px;
 }
 
 
