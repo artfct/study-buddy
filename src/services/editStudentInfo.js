@@ -27,6 +27,7 @@ async function editStudentInfo(uid, updatedInfo, firestore, storage) {
     const updateData = {
       studentName: updatedInfo.studentName,
       id: updatedInfo.id,
+      username: updatedInfo.username,
       bio: updatedInfo.bio,
       major: updatedInfo.major,
     };

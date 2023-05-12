@@ -111,17 +111,6 @@ function User({ user, firestore, storage }) {
       ) : (
         <p>Loading student information...</p>
       )}
-      <ScheduleUpload
-        user={user}
-        scheduleInstance={scheduleInstance}
-        onScheduleUpdate={handleScheduleUpdate}
-      />
-      <ScheduleDisplay
-        scheduleData={scheduleData}
-        user={user}
-        firestore={firestore}
-      />
-      <StudyBuddies user={user} firestore={firestore} />
       {isEditing ? (
         <ProfileEdit
           user={user}
@@ -135,6 +124,18 @@ function User({ user, firestore, storage }) {
       ) : (
         <button onClick={handleEdit}>Edit Profile</button>
       )}
+      <ScheduleUpload
+        user={user}
+        scheduleInstance={scheduleInstance}
+        onScheduleUpdate={handleScheduleUpdate}
+      />
+      <ScheduleDisplay
+        scheduleData={scheduleData}
+        user={user}
+        firestore={firestore}
+      />
+      <StudyBuddies user={user} firestore={firestore} />
+      
     </div>
   );
 }

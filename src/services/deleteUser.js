@@ -1,4 +1,4 @@
-export const deleteUser = async (firestore, storage, userId) => {
+export const deleteUser = async (auth, firestore, storage, userId) => {
     try {
       // Delete user's Firestore data
       await firestore.collection('users').doc(userId).delete();

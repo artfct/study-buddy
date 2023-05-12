@@ -35,6 +35,10 @@ function ProfileEdit({ user, studentInfo, firestore, storage, onCancel, onSave }
           <input type="text" name="id" value={updatedInfo.id} onChange={handleChange} />
         </label>
         <label>
+          username:
+          <input type="text" name="username" value={updatedInfo.username} onChange={handleChange} />
+        </label>
+        <label>
           Bio:
           <textarea name="bio" value={updatedInfo.bio} onChange={handleChange} />
         </label>

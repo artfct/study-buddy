@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteUser } from '../../services/deleteUser';
 
-const Admin = ({ firestore, storage }) => {
+const Admin = ({ auth, firestore, storage }) => {
   const [userId, setUserId] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(null);
@@ -12,7 +12,7 @@ const Admin = ({ firestore, storage }) => {
     setDeleteSuccess(null);
     setDeleteError(null);
 
-    const success = await deleteUser(firestore, storage, userId);
+    const success = await deleteUser(auth, firestore, storage, userId);
 
     if (success) {
       setDeleteSuccess(`User ${userId} has been deleted.`);

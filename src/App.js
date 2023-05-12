@@ -34,7 +34,7 @@ function App() {
           />
           <Route path="/profile/:userId" element={<Profile user={user} firestore={firestore} storage={storage} />} />
           <Route path="/signup" element={<Signup firestore={firestore} user={user} auth={auth} />} />
-          <Route path="/admin" element={user && user.email === 'admin@example.com' ? <Admin firestore={firestore} storage={storage} /> : null} />
+          <Route path="/admin" element={user && user.email === 'admin@example.com' ? <Admin auth={auth} firestore={firestore} storage={storage} /> : null} />
         </Routes>
       </Layout>
     </Router>
