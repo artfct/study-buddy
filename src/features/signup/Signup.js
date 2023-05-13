@@ -26,8 +26,8 @@ function Signup({ firestore, user }) {
     setUserData({ ...userData });
   };
 
-  const goToHome = () => {
-    navigate('/');
+  const goToUser = () => {
+    navigate('/user');
   };
 
   switch (step) {
@@ -41,7 +41,7 @@ function Signup({ firestore, user }) {
       return (
         <SignupPage4
           userData={userData}
-          onFinish={goToHome}
+          onFinish={goToUser}
           onBack={previousPage}
           scheduleData={scheduleData}
           firestore={firestore}

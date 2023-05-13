@@ -9,7 +9,7 @@ function SignupPage4({ userData, onFinish, onBack, scheduleData }) {
   
     console.log('userData:', userData);
   
-    await signUpWithEmailPassword({ ...userData, courses: scheduleData.courses, setError });
+    await signUpWithEmailPassword({ ...userData, courses: (scheduleData?.courses || []), setError });
     onFinish();
   };
 

@@ -105,9 +105,14 @@ function User({ user, firestore, storage }) {
   return (
     <div className="User">
       {studentInfo && studentInfo.studentName ? (
-        <h1>
-          Welcome, {studentInfo.studentName} [{studentInfo.id}]
-        </h1>
+        <div>
+          <h1>
+            Welcome, {studentInfo.studentName} [{studentInfo.id}]
+          </h1>
+          <p>{studentInfo.bio}</p>
+          <p>Major: {studentInfo.major}</p>
+        </div>
+
       ) : (
         <p>Loading student information...</p>
       )}

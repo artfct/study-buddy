@@ -13,6 +13,10 @@ function SignupPage2({ userData, onNext, onBack}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!username) {
+      alert('Username is required.');
+      return;
+    }
     onNext({ username, bio, profilePhoto, major, scheduleData});
   };
 
