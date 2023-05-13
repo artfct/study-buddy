@@ -23,6 +23,7 @@ function Signup({ firestore, user }) {
 
   const previousPage = () => {
     setStep(step - 1);
+    setUserData({ ...userData });
   };
 
   const goToHome = () => {
@@ -31,7 +32,7 @@ function Signup({ firestore, user }) {
 
   switch (step) {
     case 1:
-      return <SignupPage1 onNext={nextPage} />;
+      return <SignupPage1 userData={userData} onNext={nextPage} />;
     case 2:
       return <SignupPage2 userData={userData} onNext={nextPage} onBack={previousPage} />;
     // case 3:

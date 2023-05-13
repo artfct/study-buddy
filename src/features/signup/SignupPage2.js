@@ -3,11 +3,11 @@ import StudentCard from './StudentCard';
 import parseICSFile from '../scheduling/parseICSFile';
 
 function SignupPage2({ userData, onNext, onBack}) {
-  const [bio, setBio] = useState('');
-  const [username, setUsername] = useState('');
-  const [profilePhoto, setProfilePhoto] = useState('');
-  const [previewPhoto, setPreviewPhoto] = useState('');
-  const [major, setMajor] = useState('');
+  const [bio, setBio] = useState(userData.bio || '');
+  const [username, setUsername] = useState(userData.username || '');
+  const [profilePhoto, setProfilePhoto] = useState(userData.profilePhoto || '');
+  const [previewPhoto, setPreviewPhoto] = useState(userData.previewPhoto || '');
+  const [major, setMajor] = useState(userData.major || '');
   const [fileInput, setFileInput] = useState(null);
   const [scheduleData, setScheduleData] = useState(null);
 

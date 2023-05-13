@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { checkEmailAndStudentId } from '../../services/signUpWithEmailPassword';
 
-function SignupPage1({ onNext }) {
-  const [email, setEmail] = useState('');
+function SignupPage1({ userData, onNext }) {
+  const [email, setEmail] = useState(userData.email || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [studentName, setStudentName] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [studentName, setStudentName] = useState(userData.studentName || '');
+  const [studentId, setStudentId] = useState(userData.studentId || '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
