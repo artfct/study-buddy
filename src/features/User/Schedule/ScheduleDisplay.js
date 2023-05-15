@@ -5,6 +5,7 @@ import './ScheduleDisplay.css';
 const ScheduleDisplay = ({ scheduleData, user, firestore }) => {
   const [scheduleInstance, setScheduleInstance] = React.useState(null);
   const [scheduleDisplay, setScheduleDisplay] = React.useState(null);
+  const [loading, setLoading] = React.useState(true); // add this line
 
   React.useEffect(() => {
     if (user && firestore) {
@@ -15,8 +16,13 @@ const ScheduleDisplay = ({ scheduleData, user, firestore }) => {
   React.useEffect(() => {
     if (scheduleData && scheduleInstance) {
       setScheduleDisplay(scheduleInstance.displaySchedule(scheduleData));
+      setLoading(false); // add this line
     }
   }, [scheduleData, scheduleInstance]);
+
+  if (loading) { // add this block
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className='ScheduleDisplay'>
