@@ -36,15 +36,8 @@ export default async function fetchStudentInfo(uid, setStudentInfo, setScheduleD
       }
 
       if (userData.courses) {
-        // Convert Firestore Timestamps to JavaScript Date objects
-        const convertedScheduleData = userData.courses.map((course) => ({
-          ...course,
-          start: course.start.toDate(),
-          end: course.end.toDate(),
-        }));
-
-        console.log("Schedule data:", convertedScheduleData);
-        setScheduleData(convertedScheduleData);
+        console.log("Schedule data:", userData.courses);
+        setScheduleData(userData.courses);
       } else {
         console.log("No schedule data available.");
       }

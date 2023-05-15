@@ -22,7 +22,6 @@ class Schedule {
   save = (schedule) => {
     saveScheduleToDatabase(schedule, this.firestore, this.user.uid);
   };
-
   displaySchedule = (schedule = null) => {
     if (!schedule) {
       schedule = this.scheduleData;
@@ -44,15 +43,17 @@ class Schedule {
           </tr>
         </thead>
         <tbody>
-          {schedule.map((course, index) => (
+        {schedule.map((course, index) => {
+          return (
             <tr key={index}>
               <td>{course.code}</td>
               <td>{course.section}</td>
               <td>{course.location}</td>
-              <td>{new Date(course.start).toLocaleString()}</td>
-              <td>{new Date(course.end).toLocaleString()}</td>
+              <td>{course.start}</td>
+              <td>{course.end}</td>
             </tr>
-          ))}
+          );
+        })}
         </tbody>
       </table>
     );
