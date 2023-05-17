@@ -1,5 +1,10 @@
 import React from "react";
-import './ScheduleUpload.css';
+import { Button, Box, Typography } from '@mui/material';
+import { styled } from '@mui/system';
+
+const StyledInput = styled('input')(({ theme }) => ({
+  display: 'none',
+}));
 
 const ScheduleUpload = ({ user, scheduleInstance, onScheduleUpdate }) => {
   const handleUpload = async (e) => {
@@ -24,10 +29,15 @@ const ScheduleUpload = ({ user, scheduleInstance, onScheduleUpdate }) => {
   
 
   return (
-    <div className="ScheduleUpload">
-      <h3>Upload Schedule:</h3>
-      <input type="file" accept=".ics" onChange={handleUpload} />
-    </div>
+    <Box>
+      <Typography variant="h6">Upload Schedule:</Typography>
+      <StyledInput accept=".ics" id="contained-button-file" multiple type="file" onChange={handleUpload} />
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span">
+          Upload
+        </Button>
+      </label>
+    </Box>
   );
 };
 

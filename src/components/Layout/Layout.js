@@ -1,42 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logout from '../../services/logout';
-import './Layout.css';
 import { useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton } from '@mui/material';
+import { styled } from '@mui/system';
+import Logo from '../../mockup/asset/Fable-06.png';
+import { AccountCircle } from '@mui/icons-material';
+
+const NavLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: 'inherit',
+}));
 
 const Layout = ({ children, user }) => {
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleLogout = async () => {
-        try {
-            const signOut = logout();
-            await signOut();
-            navigate('/');
-        } catch (error) {
-            console.error("Error signing out:", error);
-        }
-        };
+  React.useEffect(() => {
+    if(user) {
+      setAnchorEl(null);
+    }
+  }, [user]);
 
-    return (
-      <div className="layout-container">
-        <header className="layout-header">
-          <div className="logo-container">
-            <Link to="/">
-              <p>HOME</p>
-            </Link>
-          </div>
-          {user && (
-            <div className="user-navigation">
-              <Link to="/user">
-                <p>User</p>
-              </Link>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          )}
-        </header>
-        <main className="layout-main">{children}</main>
-      </div>
-    );
+  const handleLogout = async () => {
+    try {
+      const signOut = logout();
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
- export default Layout  
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleViewProfile = () => {
+    navigate('/user');
+    handleMenuClose();
+  };
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <AppBar position="static" sx={{ overflow: 'hidden', backgroundColor: '#202124'}}>
+        <Toolbar sx={{ minHeight: '48px', maxHeight: '48px', width: '100%', maxWidth: '100%'}}>
+          <NavLink to="/" sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', marginLeft: '15px' }}>
+            <img src={Logo} alt="logo" style={{ height: '25px' }} />
+          </NavLink>
+          <Box sx={{ flexGrow: 1 }} />
+          {user && (
+            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '15px' }}>
+              <IconButton color="inherit" onClick={handleMenuOpen} size="small">
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                <MenuItem onClick={handleViewProfile}>View Profile</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ mt: 2, flexGrow: 1 }}>{children}</Box>
+    </Box>
+  );
+};
+
+export default Layout;

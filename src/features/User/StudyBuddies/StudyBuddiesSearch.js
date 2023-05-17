@@ -1,6 +1,6 @@
 import React from 'react';
 import findStudyBuddies from '../../scheduling/findStudyBuddies';
-import './StudyBuddiesSearch.css';
+import { TextField, Button, Box } from '@mui/material';
 
 const StudyBuddiesSearch = ({ searchTerm, setSearchTerm, setStudyBuddies, user, firestore }) => {
   const handleSearch = (term) => {
@@ -9,15 +9,15 @@ const StudyBuddiesSearch = ({ searchTerm, setSearchTerm, setStudyBuddies, user, 
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search by name"
+    <Box>
+      <TextField
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        label="Search by name"
+        variant="outlined"
       />
-      <button onClick={() => handleSearch(searchTerm)}>Search</button>
-    </div>
+      <Button variant="contained" color="primary" onClick={() => handleSearch(searchTerm)}>Search</Button>
+    </Box>
   );
 };
 

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import signInWithEmailPassword from '../../services/signInWithEmailPassword';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Container, Typography, TextField, Button, Box, Alert, Paper } from '@mui/material';
 
 function Home({ auth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState(''); // added this state to handle error
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,54 +30,61 @@ function Home({ auth }) {
       console.log('Navigating to /user...');
     } catch (error) {
       console.error('Error signing in:', error);
-      const warningMessage = document.querySelector('#warning-message');
-      warningMessage.textContent = error.message; // Display the custom error message
+      setError(error.message); // set the error message
     }
   };
-  
 
   const handleSignupClick = () => {
     navigate('/signup');
   };
 
   return (
-    <div>
-      {isLoggedIn? (<h2>Successfully Logged In</h2>) : (
-        <>
-        <h2>Sign In</h2>
-        <div id="warning-container">
-          <p id="warning-message"></p>
-        </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSignIn(email, password, auth);
-          }}
-        >
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <br />
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br />
-          <button type="submit">Sign In</button>
-        </form>
-        <p>Don't have an account? Sign up here:</p>
-        <button onClick={handleSignupClick}>Sign Up</button>
-        </>
-      )}
-      
-    </div>
+    <Container sx={{ overflow: 'hidden' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
+        <Paper sx={{ p: 4, width: '100%', maxWidth: 400, mb: 4 }}>
+          {isLoggedIn ? (
+            <Typography variant="h5">Successfully Logged In</Typography>
+          ) : (
+            <>
+              <Typography variant="h5">Sign In</Typography>
+              {error && <Alert severity="error">{error}</Alert>}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSignIn(email, password, auth);
+                }}
+              >
+                <TextField
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  fullWidth
+                  margin="normal"
+                />
+                <Button variant="contained" type="submit" sx={{ mt: 2, width: '100%' }}>
+                  Sign In
+                </Button>
+              </form>
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="body2">Don't have an account? Sign up here:</Typography>
+                <Button variant="outlined" onClick={handleSignupClick} sx={{ mt: 1, width: '100%' }}>
+                  Sign Up
+                </Button>
+              </Box>
+            </>
+          )}
+        </Paper>
+      </Box>
+    </Container>
   );
 }
 
