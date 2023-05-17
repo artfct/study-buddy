@@ -6,8 +6,6 @@ body {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 1rem;
 }
 
@@ -15,11 +13,18 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #007bff;
+  background-color: #202124;
   color: #fff;
-  padding: 1rem;
+  margin: 0;
 }
 
 main {
   margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  /* Adjust the styles for mobile devices */
+  .container {
+    padding: 0.5rem;
+  }
 }
