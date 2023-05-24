@@ -11,6 +11,8 @@ import Admin from './features/admin/Admin';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { firestore, storage, auth } from './firebase/firebase';
+// import { comeChat } from './comechat/comechat';
+import { CometChatProvider } from './cometchat/CometChatContext';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <Router>
+      <CometChatProvider>
       <Layout user={user}>
         <Routes>
           <Route exact path="/" element={<Home auth={auth} firestore={firestore} storage={storage} />} />
@@ -37,6 +40,7 @@ function App() {
           <Route path="/admin" element={user && user.email === 'admin@example.com' ? <Admin auth={auth} firestore={firestore} storage={storage} /> : null} />
         </Routes>
       </Layout>
+      </CometChatProvider>
     </Router>
   );
 }
