@@ -43,47 +43,6 @@ function User({ user, firestore, storage }) {
   };
   
   return (
-<<<<<<< HEAD
-    <div className="User">
-      {studentInfo && studentInfo.studentName ? (
-        <div>
-          <h1>
-            Welcome, {studentInfo.studentName} [{studentInfo.id}]
-          </h1>
-          <p>{studentInfo.bio}</p>
-          <p>Major: {studentInfo.major}</p>
-        </div>
-
-      ) : (
-        <p>Loading student information...</p>
-      )}
-      {isEditing ? (
-        <ProfileEdit
-          user={user}
-          firestore={firestore}
-          storage={storage}
-          studentInfo={studentInfo}
-          onSave={handleSave}
-          onCancel={handleCancel}
-          db={firestore}
-        />
-      ) : (
-        <button onClick={handleEdit}>Edit Profile</button>
-      )}
-      <ScheduleUpload
-        user={user}
-        scheduleInstance={scheduleInstance}
-        onScheduleUpdate={handleScheduleUpdate}
-      />
-      <ScheduleDisplay
-        scheduleData={scheduleData}
-        user={user}
-        firestore={firestore}
-      />
-      <StudyBuddies user={user} firestore={firestore} />
-      
-    </div>
-=======
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
@@ -131,8 +90,10 @@ function User({ user, firestore, storage }) {
         </Grid>
       </Grid>
     </Box>
->>>>>>> mui-uiux
   );
 }
 
 export default User;
+
+
+
