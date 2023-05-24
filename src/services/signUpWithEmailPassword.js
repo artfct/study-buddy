@@ -3,6 +3,7 @@ import { doc, setDoc, collection, getDocs, query, where } from "firebase/firesto
 import { ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage, auth } from "..//firebase/firebase";
 import defaultProfilePhoto from '../mockup/asset/chess.jpg';
+import createCometChatUser from "../cometchat/CreateCometChatUser";
 
 
 async function uploadProfilePhoto(storage, uid, file) {
@@ -48,6 +49,7 @@ export default async function signUpWithEmailPassword({
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     console.log("Signed up as:", userCredential.user.email);
+    console.log(userCredential);
     setError(''); // Clear the error message
 
     // Upload profile photo to Firebase Storage
@@ -79,6 +81,14 @@ export default async function signUpWithEmailPassword({
       major,
       courses: courses || [],
     });
+
+    // Create CometChat user
+    const authKey = process.env.REACT_APP_COMECHAT_AUTHKEY;
+    const uid = userCredential.user.uid;
+    const name = username;
+
+    await createCometChatUser(uid, name, authKey);
+    
 
   } catch (error) {
     console.error("Error signing up:", error);
