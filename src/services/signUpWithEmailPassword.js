@@ -39,9 +39,11 @@ export default async function signUpWithEmailPassword({
   bio,
   profilePhoto,
   major,
-  courses,
-  setError
-}) {
+  courses
+}, setError,
+  setIsLoading,
+  setProgress,
+) {
   if (password.length < 6) {
     setError("Password should be at least 6 characters");
     return;
@@ -51,6 +53,8 @@ export default async function signUpWithEmailPassword({
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     console.log("Signed up as:", userCredential.user.email);
     setError(''); // Clear the error message
+
+    setProgress(20);
 
     // Upload profile photo to Firebase Storage
     let profilePhotoURL = "";
@@ -82,6 +86,8 @@ export default async function signUpWithEmailPassword({
       courses: courses || [],
     });
 
+    setProgress(80);
+
     // Create CometChat user
     const authKey = process.env.REACT_APP_COMECHAT_AUTHKEY;
     const uid = userCredential.user.uid;
@@ -91,10 +97,11 @@ export default async function signUpWithEmailPassword({
 
       // Log in the user to CometChat
     await logInCometChatUser(uid, authKey);
-    
+    setProgress(100);    
 
   } catch (error) {
     console.error("Error signing up:", error);
+    setIsLoading(false);
 
     // Display a proper message to the user based on the error code
     if (error.code === "auth/email-already-in-use") {

@@ -3,6 +3,7 @@ import signInWithEmailPassword from '../../services/signInWithEmailPassword';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Container, Typography, TextField, Button, Box, Alert, Paper } from '@mui/material';
+import LoadingAnimation from '../../components/animation/LoadingAnimation';
 
 function Home({ auth }) {
   const [email, setEmail] = useState('');
@@ -40,6 +41,7 @@ function Home({ auth }) {
   return (
     <Container sx={{ overflow: 'hidden' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
+        <LoadingAnimation/>
         <Paper sx={{ p: 4, width: '100%', maxWidth: 400, mb: 4 }}>
           {isLoggedIn ? (
             <Typography variant="h5">Successfully Logged In</Typography>
