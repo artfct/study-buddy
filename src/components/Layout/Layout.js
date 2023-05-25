@@ -27,7 +27,6 @@ const Layout = ({ children, user }) => {
     try {
       const signOut = logout();
       await signOut();
-      console.log("HERERE")
       try {
         await CometChat.logout()
         console.log("CometChat Logout successful");
