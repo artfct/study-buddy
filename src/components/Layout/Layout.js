@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton } from '@mui/m
 import { styled } from '@mui/system';
 import Logo from '../../mockup/asset/Fable-06.png';
 import { AccountCircle } from '@mui/icons-material';
+import { CometChat } from "@cometchat-pro/chat";
 
 const NavLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -26,6 +27,13 @@ const Layout = ({ children, user }) => {
     try {
       const signOut = logout();
       await signOut();
+      console.log("HERERE")
+      try {
+        await CometChat.logout()
+        console.log("CometChat Logout successful");
+      } catch(error) {
+        console.log("ComeChat logout failed with exception: ". error);
+      }
       navigate('/');
     } catch (error) {
       console.error('Error signing out:', error);

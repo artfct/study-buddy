@@ -10,6 +10,8 @@ import ProfileEdit from '../profile/ProfileEdit';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import './User.css';
+import logInCometChatUser from '../../cometchat/LogInCometChatUser';
+import { CometChat } from "@cometchat-pro/chat";
 
 function User({ user, firestore, storage }) {
   const [studentInfo, setStudentInfo] = useState(null);
@@ -17,10 +19,17 @@ function User({ user, firestore, storage }) {
   const [scheduleInstance, setScheduleInstance] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
+
   useEffect(() => {
     if (user && firestore) {
       fetchStudentInfo(user.uid, setStudentInfo, setScheduleData, firestore, storage);
       setScheduleInstance(new Schedule(user, firestore));
+      
+      // Check if the user is already logged in to CometChat
+      const loggedInUser = CometChat.getLoggedInUser();
+      if (!loggedInUser) {
+        logInCometChatUser(user.uid, process.env.REACT_APP_COMETCHAT_AUTHKEY);
+      }
     }
   }, [user, firestore]);
 
