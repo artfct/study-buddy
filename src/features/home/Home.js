@@ -27,7 +27,6 @@ function Home({ auth }) {
       const userCredential = await signInWithEmailPassword(email, password, auth);
       console.log('User credential:', userCredential);
       navigate('/user');
-      console.log('Navigating to /user...');
     } catch (error) {
       console.error('Error signing in:', error);
       setError(error.message); // set the error message
