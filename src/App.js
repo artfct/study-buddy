@@ -8,6 +8,7 @@ import User from './features/User/User';
 import Profile from './features/profile/Profile';
 import Signup from './features/signup/Signup';
 import Admin from './features/admin/Admin';
+import Chat from './features/chat/Chat';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { firestore, storage, auth } from './firebase/firebase';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/profile/:userId" element={<Profile user={user} firestore={firestore} storage={storage} />} />
           <Route path="/signup" element={<Signup firestore={firestore} user={user} auth={auth} />} />
           <Route path="/admin" element={user && user.email === 'admin@example.com' ? <Admin auth={auth} firestore={firestore} storage={storage} /> : null} />
+          <Route path="/chat" element={<Chat />} /> 
         </Routes>
       </Layout>
       </CometChatProvider>

@@ -8,23 +8,27 @@ import ScheduleDisplay from './Schedule/ScheduleDisplay';
 import StudyBuddies from './StudyBuddies/StudyBuddies';
 import ProfileEdit from '../profile/ProfileEdit';
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import './User.css';
 import logInCometChatUser from '../../cometchat/LogInCometChatUser';
 import { CometChat } from "@cometchat-pro/chat";
+import { useNavigate } from 'react-router-dom';
+// import { CometChatUI } from "../../cometchat-pro-react-ui-kit-master/CometChatUI";
+
 
 function User({ user, firestore, storage }) {
   const [studentInfo, setStudentInfo] = useState(null);
   const [scheduleData, setScheduleData] = useState(null);
   const [scheduleInstance, setScheduleInstance] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
     if (user && firestore) {
       fetchStudentInfo(user.uid, setStudentInfo, setScheduleData, firestore, storage);
       setScheduleInstance(new Schedule(user, firestore));
-      
       // Check if the user is already logged in to CometChat
       const loggedInUser = CometChat.getLoggedInUser();
       if (!loggedInUser) {
@@ -50,6 +54,11 @@ function User({ user, firestore, storage }) {
   const handleCancel = () => {
     setIsEditing(false);
   };
+
+  const handleChatButtonClick = () => {
+    // Redirect the user to the chat page
+    navigate('/user');
+  };
   
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -62,6 +71,9 @@ function User({ user, firestore, storage }) {
               </Typography>
               <Typography variant="body1">{studentInfo.bio}</Typography>
               <Typography variant="body1">Major: {studentInfo.major}</Typography>
+              <Link to="/chat">
+              <Button variant="contained" color="primary">Go to Chat</Button>
+            </Link>
             </Box>
           ) : (
             <Typography variant="body1">Loading student information...</Typography>
@@ -98,6 +110,7 @@ function User({ user, firestore, storage }) {
           <StudyBuddies user={user} firestore={firestore} />
         </Grid>
       </Grid>
+      {/* <Route path="/chat" element={<CometChatUI />} /> */}
     </Box>
   );
 }
