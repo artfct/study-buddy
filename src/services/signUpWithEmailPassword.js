@@ -39,6 +39,7 @@ export default async function signUpWithEmailPassword({
   bio,
   profilePhoto,
   major,
+  interests,
   courses
 }, setError,
   setIsLoading,
@@ -74,6 +75,7 @@ export default async function signUpWithEmailPassword({
       await uploadBytes(profilePhotoRef, blob);
       profilePhotoURL = await getDownloadURL(profilePhotoRef);
     }
+    setProgress(70);
 
     await setDoc(doc(firestore, `users`, userCredential.user.uid), {
       studentName,
@@ -83,6 +85,7 @@ export default async function signUpWithEmailPassword({
       profilePhoto: profilePhotoURL,
       bio,
       major,
+      interests,
       courses: courses || [],
     });
 

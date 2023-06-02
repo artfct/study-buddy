@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TextField, Grid, Button, Typography, Box, TextareaAutosize } from '@mui/material';
 import StudentCard from './StudentCard';
 import parseICSFile from '../scheduling/parseICSFile';
+import InterestTagsInput from '../../components/interestTagsInput/InterestTagsInput';
+
 
 function SignupPage2({ userData, onNext, onBack}) {
   const [bio, setBio] = useState(userData.bio || '');
@@ -11,6 +13,8 @@ function SignupPage2({ userData, onNext, onBack}) {
   const [major, setMajor] = useState(userData.major || '');
   const [fileInput, setFileInput] = useState(null);
   const [scheduleData, setScheduleData] = useState(null);
+  const [interests, setInterests] = useState(userData.interests || []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +22,7 @@ function SignupPage2({ userData, onNext, onBack}) {
       alert('Username is required.');
       return;
     }
-    onNext({ username, bio, profilePhoto, major, scheduleData});
+    onNext({ username, bio, profilePhoto, major, scheduleData, interests});
   };
 
   const handleProfilePhotoChange = (e) => {
@@ -83,6 +87,11 @@ function SignupPage2({ userData, onNext, onBack}) {
               placeholder="Enter your Bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+            />
+            <InterestTagsInput
+              defaultTags={['Photography', 'Technology', 'Cooking', 'Sports', 'Music', 'Books', 'Movies', 'Art', 'Gaming', 'Fitness']}
+              initialInterests={interests}
+              onInterestsChange={setInterests}
             />
             <input
               type="file"
