@@ -71,6 +71,9 @@ function User({ user, firestore, storage }) {
               </Typography>
               <Typography variant="body1">{studentInfo.bio}</Typography>
               <Typography variant="body1">Major: {studentInfo.major}</Typography>
+              {studentInfo && studentInfo.interests ? (
+                <Typography variant="body1">Interests: {studentInfo.interests.join(', ')}</Typography>
+              ) : null}
               <Link to="/chat">
               <Button variant="contained" color="primary">Go to Chat</Button>
             </Link>

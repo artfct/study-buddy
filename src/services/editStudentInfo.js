@@ -30,6 +30,7 @@ async function editStudentInfo(uid, updatedInfo, firestore, storage) {
       username: updatedInfo.username,
       bio: updatedInfo.bio,
       major: updatedInfo.major,
+      interests: updatedInfo.interests 
     };
 
     if (updatedInfo.profilePhoto) {

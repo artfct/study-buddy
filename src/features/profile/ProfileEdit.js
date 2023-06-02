@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import editStudentInfo from '../../services/editStudentInfo';
+import InterestTagsInput from '../../components/interestTagsInput/InterestTagsInput';
+
 
 function ProfileEdit({ user, studentInfo, firestore, storage, onCancel, onSave }) {
   const [updatedInfo, setUpdatedInfo] = useState({ ...studentInfo });
+  const [interests, setInterests] = useState(studentInfo.interests || []);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,6 +22,7 @@ function ProfileEdit({ user, studentInfo, firestore, storage, onCancel, onSave }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    updatedInfo.interests = interests;
     await editStudentInfo(user.uid, updatedInfo, firestore, storage);
     onSave(updatedInfo);
   };
@@ -46,6 +51,11 @@ function ProfileEdit({ user, studentInfo, firestore, storage, onCancel, onSave }
           Major:
           <input type="text" name="major" value={updatedInfo.major} onChange={handleChange} />
         </label>
+        <InterestTagsInput
+          defaultTags={['Photography', 'Technology', 'Cooking', 'Sports', 'Music', 'Books', 'Movies', 'Art', 'Gaming', 'Fitness']}
+          initialInterests={interests}
+          onInterestsChange={setInterests}
+        />
         <label>
           Profile Photo:
           <input type="file" name="profilePhoto" onChange={handlePhotoChange} />
