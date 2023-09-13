@@ -98,11 +98,13 @@ function User({ user, firestore, storage }) {
           )}
         </Grid>
         <Grid item xs={12} md={4}>
-          <ScheduleUpload
-            user={user}
-            scheduleInstance={scheduleInstance}
-            onScheduleUpdate={handleScheduleUpdate}
-          />
+          <Box sx={{ marginBottom: 2 }}>
+            <ScheduleUpload
+              user={user}
+              scheduleInstance={scheduleInstance}
+              onScheduleUpdate={handleScheduleUpdate}
+            />
+          </Box>
           <ScheduleDisplay
             scheduleData={scheduleData}
             user={user}

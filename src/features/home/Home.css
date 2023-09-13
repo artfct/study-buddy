@@ -1,0 +1,7 @@
+.centered-list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Add any additional styling as needed */
+  }
+  

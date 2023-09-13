@@ -1,6 +1,8 @@
 import React from "react";
 import parseICSFile from "../../scheduling/parseICSFile";
 import saveScheduleToDatabase from "../../../services/saveScheduleToDatabase";
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+
 
 class Schedule {
   constructor(user, firestore) {
